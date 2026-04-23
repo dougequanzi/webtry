@@ -756,10 +756,92 @@ body {
   gap: 0.5rem;
 }
 
-.feature-grid .feature-card p {
-  margin: 0;
+.data-path {
+  background: #f8f9fa;
+  border-left: 4px solid #3949ab;
+  padding: 0.75rem 1rem;
+  margin: 0.5rem 0 1rem 0;
   color: #666;
   font-size: 0.9rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.pdf-placeholder {
+  background: #f8f9fa;
+  border: 2px dashed #e8eaf6;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.pdf-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #3949ab;
+}
+
+.pdf-placeholder h4 {
+  margin: 0 0 0.5rem 0;
+  color: #1a237e;
+}
+
+.pdf-placeholder p {
+  margin: 0 0 1.5rem 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.view-pdf-btn {
+  padding: 0.75rem 1.5rem;
+  background: #3949ab;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.3s ease;
+}
+
+.view-pdf-btn:hover {
+  background: #1a237e;
+}
+
+.data-paths {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.path-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #3949ab;
+}
+
+.path-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  color: #3949ab;
+}
+
+.path-info h4 {
+  margin: 0 0 0.5rem 0;
+  color: #1a237e;
+  font-size: 1rem;
+}
+
+.path-info p {
+  margin: 0;
+  color: #666;
+  font-size: 0.85rem;
+  font-family: monospace;
+  word-break: break-all;
 }
 
 .footer-note {

@@ -5,11 +5,8 @@ import './App.css';
 // 导入实际数据
 import performanceData from './data/performanceData.json';
 
-// 导入新组件
-import ImageGallery from './components/ImageGallery';
-import PDFViewer from './components/PDFViewer';
-import FileBrowser from './components/FileBrowser';
-import FileStatusMonitor from './components/FileStatusMonitor';
+// 导入简单图片展示组件
+import SimpleImageGallery from './components/SimpleImageGallery';
 
 // 页面组件
 const HomePage = () => (
@@ -26,8 +23,6 @@ const HomePage = () => (
         <li><strong>政协界别委员联系界别群众实践</strong> - 南城发展专题</li>
         <li><strong>星级委员评定</strong> - 委员履职星级评定管理</li>
         <li><strong>2026年度履职计划</strong> - 年度工作计划与目标管理</li>
-        <li><strong>文件浏览器</strong> - 浏览和管理所有文件、图片和文档</li>
-        <li><strong>文件状态监控</strong> - 实时监控文件可读性，及时反馈问题</li>
       </ul>
     </div>
     <div className="stats">
@@ -53,29 +48,23 @@ const HomePage = () => (
     </div>
 
     <div className="section">
-      <h3>文件状态监控</h3>
-      <p>实时监控数据目录中所有文件的可读性状态</p>
-      <FileStatusMonitor />
-    </div>
-
-    <div className="section">
-      <h3>系统特色功能</h3>
+      <h3>系统特色</h3>
       <div className="feature-grid">
         <div className="feature-card">
-          <h4>🖼️ 图片浏览</h4>
-          <p>支持界别活动照片的浏览、筛选和放大查看</p>
+          <h4>🖼️ 界别活动照片</h4>
+          <p>展示16个政协界别的活动照片</p>
         </div>
         <div className="feature-card">
-          <h4>📄 PDF嵌入</h4>
-          <p>PDF文档直接嵌入网页，支持缩放、翻页和下载</p>
+          <h4>📄 文档查看</h4>
+          <p>查看街道委员小组和星级评定文档</p>
         </div>
         <div className="feature-card">
-          <h4>🔍 文件检查</h4>
-          <p>自动检查文件可读性，遇到问题及时反馈</p>
+          <h4>📊 履职数据</h4>
+          <p>展示50个委员工作室的履职情况</p>
         </div>
         <div className="feature-card">
-          <h4>📁 文件管理</h4>
-          <p>完整的文件浏览器，支持搜索、过滤和分类查看</p>
+          <h4>🏆 星级评定</h4>
+          <p>委员履职星级评定与管理</p>
         </div>
       </div>
     </div>
@@ -132,7 +121,7 @@ const CommitteeHomePage = () => {
         <div className="section">
           <h3>委员列表</h3>
           <div className="member-grid">
-            {members.map(member => (
+            {members.map((member: CommitteeMember) => (
               <div key={member.id} className="member-card">
                 <div className="member-avatar">{member.name.charAt(0)}</div>
                 <div className="member-info">
@@ -220,21 +209,13 @@ const StreetCommitteePage = () => {
         </div>
 
         <div className="section">
-          <h3>街道委员小组PDF文档</h3>
-          <PDFViewer 
-            filePath="2. 街道委员小组/14街道.pdf"
-            title="14个街道委员小组组织架构"
-            description="详细介绍了上城区14个街道委员小组的组织架构、工作职责和活动情况"
-          />
-        </div>
-
-        <div className="section">
-          <h3>街道文件管理</h3>
-          <FileBrowser 
-            categoryId="street-committee"
-            showImages={false}
-            showDocuments={true}
-          />
+          <h3>街道委员小组文档</h3>
+          <div className="pdf-placeholder">
+            <div className="pdf-icon">📄</div>
+            <h4>14个街道委员小组组织架构</h4>
+            <p>详细介绍了上城区14个街道委员小组的组织架构、工作职责和活动情况</p>
+            <button className="view-pdf-btn">查看文档</button>
+          </div>
         </div>
       </div>
     </div>
@@ -300,19 +281,8 @@ const CategoryInfoPage = () => {
 
         <div className="section">
           <h3>界别活动照片</h3>
-          <ImageGallery 
-            images={[]}
-            category="界别基本情况"
+          <SimpleImageGallery 
             title="政协界别活动照片"
-          />
-        </div>
-
-        <div className="section">
-          <h3>界别文件管理</h3>
-          <FileBrowser 
-            categoryId="category-info"
-            showImages={true}
-            showDocuments={true}
           />
         </div>
       </div>
@@ -365,7 +335,7 @@ const PerformancePlatformPage = () => {
         <div className="section">
           <h3>委员工作室列表</h3>
           <div className="studio-list">
-            {studios.map(studio => (
+            {studios.map((studio: any) => (
               <div key={studio.id} className="studio-card">
                 <div className="studio-header">
                   <span className="studio-id">{studio.id}</span>
@@ -415,96 +385,6 @@ const PerformancePlatformPage = () => {
 };
 
 // 新增页面组件
-const FileBrowserPage = () => (
-  <div className="page">
-    <h1>文件浏览器</h1>
-    <p>浏览和管理所有政协文件、图片和文档</p>
-    
-    <div className="content">
-      <div className="section">
-        <h3>完整文件系统</h3>
-        <p>浏览数据目录中的所有文件，支持预览、检查和下载</p>
-        <FileBrowser 
-          showImages={true}
-          showDocuments={true}
-        />
-      </div>
-
-      <div className="section">
-        <h3>文件类型说明</h3>
-        <div className="file-types-info">
-          <div className="type-info">
-            <div className="type-icon" style={{ color: '#4caf50' }}>🖼️</div>
-            <div className="type-details">
-              <h4>图片文件</h4>
-              <p>界别活动照片、工作场景图片等</p>
-              <p>支持格式: .webp, .jpg, .png, .gif</p>
-            </div>
-          </div>
-          <div className="type-info">
-            <div className="type-icon" style={{ color: '#f44336' }}>📄</div>
-            <div className="type-details">
-              <h4>PDF文档</h4>
-              <p>街道组织架构、评定表格等文档</p>
-              <p>支持在线预览和下载</p>
-            </div>
-          </div>
-          <div className="type-info">
-            <div className="type-icon" style={{ color: '#2196f3' }}>📝</div>
-            <div className="type-details">
-              <h4>Word文档</h4>
-              <p>工作报告、计划文档等</p>
-              <p>支持文件信息查看</p>
-            </div>
-          </div>
-          <div className="type-info">
-            <div className="type-icon" style={{ color: '#388e3c' }}>📊</div>
-            <div className="type-details">
-              <h4>Excel表格</h4>
-              <p>委员信息表、工作计划表等</p>
-              <p>支持数据查看</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="section">
-        <h3>使用说明</h3>
-        <div className="usage-steps">
-          <div className="usage-step">
-            <div className="step-number">1</div>
-            <div className="step-content">
-              <h4>选择分类</h4>
-              <p>在左侧选择文件分类，查看对应文件</p>
-            </div>
-          </div>
-          <div className="usage-step">
-            <div className="step-number">2</div>
-            <div className="step-content">
-              <h4>搜索过滤</h4>
-              <p>使用搜索框和类型过滤快速找到文件</p>
-            </div>
-          </div>
-          <div className="usage-step">
-            <div className="step-number">3</div>
-            <div className="step-content">
-              <h4>预览检查</h4>
-              <p>点击文件预览，使用"检查"按钮验证文件可读性</p>
-            </div>
-          </div>
-          <div className="usage-step">
-            <div className="step-number">4</div>
-            <div className="step-content">
-              <h4>问题反馈</h4>
-              <p>遇到无法读取的文件时，系统会及时反馈错误信息</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
 const PracticePage = () => (
   <div className="page">
     <h1>政协界别委员联系界别群众实践</h1>
@@ -636,21 +516,13 @@ const StarRatingPage = () => (
       </div>
 
       <div className="section">
-        <h3>评定表PDF文档</h3>
-        <PDFViewer 
-          filePath="6. 星级委员评定/评定表.pdf"
-          title="委员履职星级评定表"
-          description="委员履职星级评定标准、评分细则和评定表格"
-        />
-      </div>
-
-      <div className="section">
-        <h3>评定文件管理</h3>
-        <FileBrowser 
-          categoryId="star-rating"
-          showImages={false}
-          showDocuments={true}
-        />
+        <h3>评定表文档</h3>
+        <div className="pdf-placeholder">
+          <div className="pdf-icon">📄</div>
+          <h4>委员履职星级评定表</h4>
+          <p>委员履职星级评定标准、评分细则和评定表格</p>
+          <button className="view-pdf-btn">查看文档</button>
+        </div>
       </div>
     </div>
   </div>
@@ -736,7 +608,6 @@ function App() {
             <li><Link to="/practice">联系群众实践</Link></li>
             <li><Link to="/star-rating">星级评定</Link></li>
             <li><Link to="/annual-plan">年度计划</Link></li>
-            <li><Link to="/file-browser">文件浏览器</Link></li>
           </ul>
         </nav>
 
@@ -750,7 +621,6 @@ function App() {
             <Route path="/practice" element={<PracticePage />} />
             <Route path="/star-rating" element={<StarRatingPage />} />
             <Route path="/annual-plan" element={<AnnualPlanPage />} />
-            <Route path="/file-browser" element={<FileBrowserPage />} />
           </Routes>
         </main>
 
@@ -758,8 +628,8 @@ function App() {
           <p>© 2026 上城区政协委员通系统 - 杭州市上城区政协信息管理平台</p>
           <p>地址：杭州市上城区 | 电话：0571-XXXXXXX | 邮箱：scqzx@hangzhou.gov.cn</p>
           <p className="footer-note">
-            📁 系统支持图片浏览、PDF查看和文件管理 | 
-            🔍 遇到无法读取的文件时会及时反馈
+            📁 系统直接展示实际数据目录中的内容 | 
+            🖼️ 支持界别活动照片浏览
           </p>
         </footer>
       </div>
